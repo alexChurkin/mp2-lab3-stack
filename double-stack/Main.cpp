@@ -42,7 +42,7 @@ int main()
 	TDoubleStack<int> s2 = s;
 	cout << s2 << "\n\n";
 
-	cout << "> And clear s1:\n";
+	cout << "> And clear s:\n";
 	s.Clear();
 
 	cout << "s:  " << s << "\n";
