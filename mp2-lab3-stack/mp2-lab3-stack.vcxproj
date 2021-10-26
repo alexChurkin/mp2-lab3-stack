@@ -139,9 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="mp2-lab3-stack.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="TCalculator.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TDoubleStack.h" />
     <ClInclude Include="TStack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 using namespace std;
 
@@ -12,7 +13,7 @@ private:
 	int pos;
 
 public:
-	TStack(int _size = 10)
+	TStack(int _size = 300)
 	{
 		if (_size <= 0)
 			throw _size;
