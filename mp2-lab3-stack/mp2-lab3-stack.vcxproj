@@ -141,6 +141,9 @@
   <ItemGroup>
     <ClCompile Include="mp2-lab3-stack.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TStack.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
