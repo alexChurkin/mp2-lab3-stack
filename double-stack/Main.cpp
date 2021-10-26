@@ -31,7 +31,7 @@ int main()
 		cout << "Exception: stack is full, no more size available\n\n";
 	}
 
-	cout << "> The we can take the top element " << s.Pop1() << " from the 1-st stack:" << '\n';
+	cout << "> Then we can take the top element " << s.Pop1() << " from the 1-st stack:" << '\n';
 	cout << s << "\n\n";
 
 	cout << "> And push 500 to the 2-nd, for example:" << '\n';
