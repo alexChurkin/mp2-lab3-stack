@@ -18,12 +18,9 @@
     <ClCompile Include="Main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="TCalculator.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TStack.h">
+    <ClInclude Include="TDoubleStack.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
