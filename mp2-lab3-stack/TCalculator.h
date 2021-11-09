@@ -117,7 +117,7 @@ public:
 	//Вычисление значения выражения в постфиксной записи
 	//(пока что считывает только числа от 1 до 9, причём без дробной части)
 	double Calc() {
-		postfix = TranslateToPostfix(expr);
+		postfix = ToPostfix();
 
 		//Пройдём по всему выражению посимвольно
 		for (int i = 0; i < postfix.length(); i++)

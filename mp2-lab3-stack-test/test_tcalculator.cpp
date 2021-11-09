@@ -1,4 +1,4 @@
-#include "gtest.h"
+#include "pch.h"
 #include "..\mp2-lab3-stack\TCalculator.h"
 
 TEST(TCalculator, can_create_calculator)

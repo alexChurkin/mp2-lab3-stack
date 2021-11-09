@@ -1,4 +1,4 @@
-#include "gtest.h"
+#include "pch.h"
 #include "..\mp2-lab3-stack\TStack.h"
 
 TEST(TStack, can_create_stack_with_positive_size)
