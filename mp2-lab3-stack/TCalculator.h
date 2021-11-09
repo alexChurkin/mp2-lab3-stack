@@ -10,7 +10,7 @@ class TCalculator {
 	//Строка, содержащая некоторое арифм. выражение
 	//Например, (2+2)*2
 	string expr;
-	string postfix = "2 2 +";
+	string postfix;
 	TStack<char> st_char;
 	TStack<double> st_d;
 
@@ -29,48 +29,6 @@ class TCalculator {
 		return 0;
 	}
 
-	string ToPostfix() {
-		string postfixResult = "";
-
-		//Наша исходная строка, обрамлённая скобками
-		string infix = "(" + expr + ")";
-		//Очистка предыдущего результата и стека от старых результатов
-		postfix = "";
-		st_char.Clear();
-
-		for (int i = 0; i < infix.size(); i++)
-		{
-			//Если число - допишем в результат сразу
-			if (isdigit(infix[i]))
-			{
-				postfix += infix[i] + " ";
-			}
-			//Если открывающая скобка - просто запишем в стек
-			else if (infix[i] == '(')
-			{
-				st_char.Push(infix[i]);
-			}
-			//Если закрывающая скобка - вытаскиваем из стека в результат всё до первой (
-			else if (infix[i] == ')')
-			{
-				while (st_char.Top() != '(')
-					postfix += st_char.Pop() + " ";
-				//Удалим саму закрывающую скобку
-				st_char.Pop();
-			}
-			else if ((infix[i] == '+') || (infix[i] == '-') || (infix[i] == '*') || (infix[i] == '/') || (infix[i] == '^'))
-			{
-				while (prior(infix[i]) <= prior(st_char.Top()))
-				{
-					postfix += st_char.Pop() + " ";
-				}
-				st_char.Push(infix[i]);
-			}
-		}
-
-		return postfixResult;
-	}
-
 public:
 	//Конструктор
 	TCalculator() {
@@ -83,11 +41,13 @@ public:
 	//Конструктор копирования
 	TCalculator(const TCalculator& other) {
 		expr = other.expr;
+		postfix = other.postfix;
 	}
 
 	//Оператор присваивания
 	TCalculator& operator=(const TCalculator& other) {
 		expr = other.expr;
+		postfix = other.postfix;
 		return *this;
 	}
 
@@ -97,6 +57,10 @@ public:
 
 	string GetExpr() {
 		return expr;
+	}
+
+	string GetPostfix() {
+		return postfix;
 	}
 
 	//Проверка выражения на правильность расстановки скобок
@@ -114,11 +78,52 @@ public:
 		return st_char.IsEmpty();
 	}
 
+	void PreparePostfix() {
+		//Исходная строка, обрамлённая скобками, чтобы стек самоочистился в конце
+		string infix = "(" + expr + ")";
+		//Очистка предыдущего результата и стека от старых результатов
+		postfix = "";
+		st_char.Clear();
+
+		for (int i = 0; i < infix.size(); i++)
+		{
+			//Если число - допишем в результат сразу
+			if (isdigit(infix[i]))
+			{
+				postfix += infix[i];
+				postfix += " ";
+			}
+			//Если открывающая скобка - просто запишем в стек
+			else if (infix[i] == '(')
+			{
+				st_char.Push(infix[i]);
+			}
+			//Если закрывающая скобка - вытаскиваем из стека в результат всё до первой (
+			else if (infix[i] == ')')
+			{
+				while (st_char.Top() != '(')
+				{
+					postfix += st_char.Pop();
+					postfix += " ";
+				}
+				//Удалим саму закрывающую скобку
+				st_char.Pop();
+			}
+			else if ((infix[i] == '+') || (infix[i] == '-') || (infix[i] == '*') || (infix[i] == '/') || (infix[i] == '^'))
+			{
+				while (prior(infix[i]) <= prior(st_char.Top()))
+				{
+					postfix += st_char.Pop();
+					postfix += " ";
+				}
+				st_char.Push(infix[i]);
+			}
+		}
+	}
+
 	//Вычисление значения выражения в постфиксной записи
 	//(пока что считывает только числа от 1 до 9, причём без дробной части)
 	double Calc() {
-		postfix = ToPostfix();
-
 		//Пройдём по всему выражению посимвольно
 		for (int i = 0; i < postfix.length(); i++)
 		{
@@ -136,15 +141,15 @@ public:
 				if (st_d.IsNotEmpty()) {
 					second = st_d.Pop();
 				}
-				else throw "Exception: Too much operations: column "
-					+ to_string(i + 1) + "of the postfix string";
+				//else throw "Exception: Too much operations: column "
+					//+ to_string(i + 1) + "of the postfix string";
 
 				//Удалось взять первый операнд (стек не пуст)
 				if (st_d.IsNotEmpty()) {
 					first = st_d.Pop();
 				}
-				else throw "Exception: Too much operations: column "
-					+ to_string(i + 1) + "of the postfix string";
+				//else throw "Exception: Too much operations: column "
+					//+ to_string(i + 1) + "of the postfix string";
 
 
 				switch (postfix[i]) {
@@ -171,14 +176,14 @@ public:
 			double result = st_d.Pop();
 			//Если в стеке ещё остались числа, то в исх. строке было слишком много операндов
 			if (st_d.IsNotEmpty()) {
-				throw "Exception: Too many operands in the string";
+				//throw "Exception: Too many operands in the string";
 			}
 			return result;
 		}
 		//Если стек оказался пуст на этапе возврата результата, то операндов не было в принципе,
 		//Как и операций, т.к. в противном случае исключение из-за недостатка операндов возникло бы раньше
 		else {
-			throw "Exception: No operands in the string";
+			//throw "Exception: No operands in the string";
 		}
 	}
 };

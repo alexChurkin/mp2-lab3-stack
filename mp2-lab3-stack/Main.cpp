@@ -15,26 +15,36 @@ int main()
 
 	string str;
 
-	cout << "1. Braces test:\n";
-	cout << "==============\n\n";
-	cout << "Enter some usual PREFIX expression:\n";
-	getline(cin, str);
+	while (true) {
+		cout << "Enter some expression:\n";
+		getline(cin, str);
+		cout << '\n';
+		calc.SetExpr(str);
 
-	calc.SetExpr(str);
-	if (calc.CheckExpr()) {
-		cout << "Braces are correct :)\n\n";
+		cout << "1. Braces:\n";
+		cout << "==========================\n";
+		bool bracesOk = calc.CheckExpr();
+
+		if (bracesOk) {
+			cout << "Braces are correct :)\n";
+			cout << "==========================\n\n";
+		}
+		else {
+			cout << "Braces are incorrect :(\n";
+			cout << "==========================\n\n\n";
+			continue;
+		}
+
+		cout << "2. Translation to postfix:\n";
+		cout << "==========================\n";
+		calc.PreparePostfix();
+		cout << "Result: " << calc.GetPostfix() << "\n";
+		cout << "==========================\n\n";
+
+		cout << "3. Calculation result:\n";
+		cout << "==========================\n";
+		cout << "Result: " << calc.Calc() << "\n";
+		cout << "==========================\n\n\n";
 	}
-	else {
-		cout << "Braces are incorrect :(\n\n";
-	}
-
-	cout << "2. Postfix test:\n";
-	cout << "===============\n\n";
-	cout << "Enter some POSTFIX expression:\n";
-	getline(cin, str);
-
-	calc.SetExpr(str);
-	cout << "Result: " << calc.Calc();
-
 	return 0;
 }
