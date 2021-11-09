@@ -205,7 +205,7 @@ TEST(TStack, can_push_and_pop_normally)
 	EXPECT_EQ(popped, number);
 }
 
-TEST(TSTack, cant_push_when_stack_is_full)
+TEST(TStack, cant_push_when_stack_is_full)
 {
 	int size = 5;
 	TStack<int> s(size);
@@ -217,7 +217,7 @@ TEST(TSTack, cant_push_when_stack_is_full)
 	ASSERT_ANY_THROW(s.Push(120));
 }
 
-TEST(TSTack, cant_pop_when_stack_is_empty)
+TEST(TStack, cant_pop_when_stack_is_empty)
 {
 	int size = 5;
 	TStack<int> s(size);
