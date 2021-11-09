@@ -14,6 +14,63 @@ class TCalculator {
 	TStack<char> st_char;
 	TStack<double> st_d;
 
+	//По знаку операции возвращает её приоритет
+	int prior(char op) {
+		switch (op) {
+		//Чтобы не писать отдельный обработчик, при работе со стеком,
+		//назначим скобке приоритет 0 (наверх скобки заносится любая лругая операция)
+		case '(': return 0;
+		case '+': return 1;
+		case '-': return 1;
+		case '*': return 2;
+		case '/': return 2;
+		case '^': return 3;
+		}
+		return 0;
+	}
+
+	string ToPostfix() {
+		string postfixResult = "";
+
+		//Наша исходная строка, обрамлённая скобками
+		string infix = "(" + expr + ")";
+		//Очистка предыдущего результата и стека от старых результатов
+		postfix = "";
+		st_char.Clear();
+
+		for (int i = 0; i < infix.size(); i++)
+		{
+			//Если число - допишем в результат сразу
+			if (isdigit(infix[i]))
+			{
+				postfix += infix[i] + " ";
+			}
+			//Если открывающая скобка - просто запишем в стек
+			else if (infix[i] == '(')
+			{
+				st_char.Push(infix[i]);
+			}
+			//Если закрывающая скобка - вытаскиваем из стека в результат всё до первой (
+			else if (infix[i] == ')')
+			{
+				while (st_char.Top() != '(')
+					postfix += st_char.Pop() + " ";
+				//Удалим саму закрывающую скобку
+				st_char.Pop();
+			}
+			else if ((infix[i] == '+') || (infix[i] == '-') || (infix[i] == '*') || (infix[i] == '/') || (infix[i] == '^'))
+			{
+				while (prior(infix[i]) <= prior(st_char.Top()))
+				{
+					postfix += st_char.Pop() + " ";
+				}
+				st_char.Push(infix[i]);
+			}
+		}
+
+		return postfixResult;
+	}
+
 public:
 	//Конструктор
 	TCalculator() {
@@ -26,20 +83,16 @@ public:
 	//Конструктор копирования
 	TCalculator(const TCalculator& other) {
 		expr = other.expr;
-		postfix = other.postfix;
 	}
 
 	//Оператор присваивания
 	TCalculator& operator=(const TCalculator& other) {
 		expr = other.expr;
-		postfix = other.postfix;
 		return *this;
 	}
 
 	void SetExpr(string _expr) {
 		expr = _expr;
-		//TODO Convert expr to postfix
-		postfix = expr;
 	}
 
 	string GetExpr() {
@@ -64,6 +117,8 @@ public:
 	//Вычисление значения выражения в постфиксной записи
 	//(пока что считывает только числа от 1 до 9, причём без дробной части)
 	double Calc() {
+		postfix = TranslateToPostfix(expr);
+
 		//Пройдём по всему выражению посимвольно
 		for (int i = 0; i < postfix.length(); i++)
 		{
@@ -91,7 +146,7 @@ public:
 				else throw "Exception: Too much operations: column "
 					+ to_string(i + 1) + "of the postfix string";
 
-				
+
 				switch (postfix[i]) {
 				case '+':
 					st_d.Push(first + second);
