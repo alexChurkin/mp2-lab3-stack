@@ -81,7 +81,7 @@ TEST(TCalculator, can_add)
 	c.SetExpr("4 + 5");
 	c.PreparePostfix();
 
-	EXPECT_EQ(c.Calc(), 9);
+	EXPECT_EQ(c.CalcPostfix(), 9);
 }
 
 TEST(TCalculator, can_substract)
@@ -90,7 +90,7 @@ TEST(TCalculator, can_substract)
 	c.SetExpr("4 - 5");
 	c.PreparePostfix();
 
-	EXPECT_EQ(c.Calc(), -1);
+	EXPECT_EQ(c.CalcPostfix(), -1);
 }
 
 TEST(TCalculator, can_multiply)
@@ -99,7 +99,7 @@ TEST(TCalculator, can_multiply)
 	c.SetExpr("4 * 5");
 	c.PreparePostfix();
 
-	EXPECT_EQ(c.Calc(), 20);
+	EXPECT_EQ(c.CalcPostfix(), 20);
 }
 
 TEST(TCalculator, can_divide)
@@ -108,7 +108,7 @@ TEST(TCalculator, can_divide)
 	c.SetExpr("8 / 4");
 	c.PreparePostfix();
 
-	EXPECT_EQ(c.Calc(), 2);
+	EXPECT_EQ(c.CalcPostfix(), 2);
 }
 
 TEST(TCalculator, can_raise_to_the_power)
@@ -117,7 +117,7 @@ TEST(TCalculator, can_raise_to_the_power)
 	c.SetExpr("4^2");
 	c.PreparePostfix();
 
-	EXPECT_EQ(c.Calc(), 16);
+	EXPECT_EQ(c.CalcPostfix(), 16);
 }
 
 TEST(TCalculator, can_calculate_complex_expression_1)
@@ -126,7 +126,7 @@ TEST(TCalculator, can_calculate_complex_expression_1)
 	c.SetExpr("1 - 2 + 4 * 5^2");
 	c.PreparePostfix();
 
-	EXPECT_EQ(c.Calc(), 99);
+	EXPECT_EQ(c.CalcPostfix(), 99);
 }
 
 TEST(TCalculator, can_calculate_complex_expression_2)
@@ -135,7 +135,7 @@ TEST(TCalculator, can_calculate_complex_expression_2)
 	c.SetExpr("((1 + 9) / 2 * 4^2) - 2 + 3");
 	c.PreparePostfix();
 
-	EXPECT_EQ(c.Calc(), 81);
+	EXPECT_EQ(c.CalcPostfix(), 81);
 }
 
 TEST(TCalculator, can_calculate_complex_expression_3)
@@ -144,5 +144,5 @@ TEST(TCalculator, can_calculate_complex_expression_3)
 	c.SetExpr("2 + (((1 - 9 + 4^2 + 8) * 2+((3)) - 1) * 2)");
 	c.PreparePostfix();
 
-	EXPECT_EQ(c.Calc(), 70);
+	EXPECT_EQ(c.CalcPostfix(), 70);
 }

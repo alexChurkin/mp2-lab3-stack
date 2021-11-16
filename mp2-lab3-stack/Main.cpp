@@ -43,7 +43,7 @@ int main()
 
 		cout << "3. Calculation result:\n";
 		cout << "==========================\n";
-		cout << "Result: " << calc.Calc() << "\n";
+		cout << "Result: " << calc.CalcPostfix() << "\n";
 		cout << "==========================\n\n\n";
 	}
 	return 0;
