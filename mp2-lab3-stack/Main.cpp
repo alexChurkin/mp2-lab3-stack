@@ -10,41 +10,52 @@ using namespace std;
 int main()
 {
 	setlocale(LC_ALL, "russian");
+	setlocale(LC_NUMERIC, "eng");
 	
 	TCalculator calc;
 
 	string str;
 
 	while (true) {
-		cout << "Enter some expression:\n";
+		cout << "Enter your expression:\n\n";
 		getline(cin, str);
-		cout << '\n';
+		cout << "========================\n\n";
 		calc.SetExpr(str);
+		cout << "Expression: " << calc.GetExpr();
 
-		cout << "1. Braces:\n";
-		cout << "==========================\n";
 		bool bracesOk = calc.CheckExpr();
-
 		if (bracesOk) {
-			cout << "Braces are correct :)\n";
-			cout << "==========================\n\n";
+			cout << "Braces are correct :)\n\n";
 		}
 		else {
-			cout << "Braces are incorrect :(\n";
-			cout << "==========================\n\n\n";
+			cout << "Braces are incorrect :(\n\n";
 			continue;
 		}
 
-		cout << "2. Translation to postfix:\n";
-		cout << "==========================\n";
+		cout << "Postfix: ";
 		calc.PreparePostfix();
-		cout << "Result: " << calc.GetPostfix() << "\n";
-		cout << "==========================\n\n";
+		cout << calc.GetPostfix() << "\n\n";
 
-		cout << "3. Calculation result:\n";
-		cout << "==========================\n";
-		cout << "Result: " << calc.CalcPostfix() << "\n";
-		cout << "==========================\n\n\n";
+		cout << "Result (CalcPostfix):  ";
+		try
+		{
+			cout << calc.CalcPostfix() << "\n";
+		}
+		catch (...)
+		{
+			cout << "Exception\n\n";
+		}
+
+		cout << "Result (Calc):         ";
+		try
+		{
+			cout << calc.Calc() << "\n\n";
+		}
+		catch (...)
+		{
+			cout << "Exception\n\n";
+		}
+		cout << "==================================\n\n";
 	}
 	return 0;
 }

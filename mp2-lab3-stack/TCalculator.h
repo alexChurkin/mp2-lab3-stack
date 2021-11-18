@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <sstream>
 #include "TStack.h"
 
 using namespace std;
@@ -90,8 +91,18 @@ public:
 			//Если число - допишем в результат сразу
 			if (isdigit(infix[i]))
 			{
-				postfix += infix[i];
+				size_t idx;
+				double tmp = stod(&infix[i], &idx);
+
+				ostringstream ss;
+				ss << tmp;
+
+				postfix += ss.str();
 				postfix += " ";
+
+				//К счётчику прибавляется индекс, чтобы пропустить длинное число
+				//-1, т.к. сам цикл сделает i++ затем
+				i += idx - 1;
 			}
 			//Если открывающая скобка - просто запишем в стек
 			else if (infix[i] == '(')
@@ -120,24 +131,29 @@ public:
 			}
 		}
 		//Избавление от пробела в конце, если он остался
-		if (postfix[postfix.size() - 1] == ' ')
-		{
+		if (!postfix.empty())
 			postfix.pop_back();
-		}
 	}
 
 	//Вычисление значения выражения в постфиксной записи
 	//(считывает только числа от 1 до 9 без дробной части)
 	double CalcPostfix() {
+		if (postfix.empty()) throw "Empty";
 		//Пройдём по всему выражению посимвольно
 		for (int i = 0; i < postfix.length(); i++)
 		{
 			//Если текущий символ - число, то кладём его в стек
 			if (postfix[i] >= '0' && postfix[i] <= '9') {
-				st_d.Push(stod(&postfix[i]));
+
+				size_t idx;
+				double tmp = stod(&postfix[i], &idx);
+				st_d.Push(tmp);
+				//К счётчику прибавляется индекс, чтобы пропустить длинное число
+				//-1, т.к. сам цикл сделает i++ затем
+				i += idx - 1;
 			}
 			//Если символ - знак некой операции, то выполним эту операцию
-			if (postfix[i] == '+' || postfix[i] == '-' ||
+			else if (postfix[i] == '+' || postfix[i] == '-' ||
 				postfix[i] == '*' || postfix[i] == '/' || postfix[i] == '^') {
 				double second;
 				double first;
@@ -147,14 +163,14 @@ public:
 					second = st_d.Pop();
 				}
 				else throw "Exception: Too much operations: column "
-					+ to_string(i + 1) + "of the postfix string";
+					+ to_string(i + 1) + " of the postfix string";
 
 				//Удалось взять первый операнд (стек не пуст)
 				if (st_d.IsNotEmpty()) {
 					first = st_d.Pop();
 				}
 				else throw "Exception: Too much operations: column "
-					+ to_string(i + 1) + "of the postfix string";
+					+ to_string(i + 1) + " of the postfix string";
 
 
 				switch (postfix[i]) {
@@ -207,12 +223,11 @@ public:
 			{
 				st_char.Push(infix[i]);
 			}
-			//Число - считывается и доб. в стек операндов
+			//Число - считывается и добавляется в стек операндов
 			else if (isdigit(infix[i]))
 			{
-				double tmp;
 				size_t idx;
-				tmp = stod(&infix[i], &idx);
+				double tmp = stod(&infix[i], &idx);
 				st_d.Push(tmp);
 				//К счётчику прибавляется индекс, чтобы пропустить длинное число
 				//-1, т.к. сам цикл сделает i++ затем
@@ -221,14 +236,21 @@ public:
 			//Операция - добавляется в стек операций
 			else if ((infix[i] == '+') || (infix[i] == '-') || (infix[i] == '*') || (infix[i] == '/') || (infix[i] == '^'))
 			{
+				//Если операция имеет приоритет ниже операции на вершине стека операций,
+				//Выполняются все более приоритетные операции из стека (до достижения <= по приоритету)
+				//и их результаты каждый раз попадают в стек операндов
 				while (prior(infix[i]) <= prior(st_char.Top()))
 				{
+					if (st_d.IsEmpty())
+						throw "Exception: Too much operations";
 					double second = st_d.Pop();
-					double first = st_d.Pop();
 
+					if (st_d.IsEmpty())
+						throw "Exception: Too much operations";
+					double first = st_d.Pop();
+					
 					char op = st_char.Pop();
 
-					//TODO Для всех операций
 					switch (op)
 					{
 					case '+':
@@ -250,17 +272,19 @@ public:
 				}
 				st_char.Push(infix[i]);
 			}
-			//Закрывающая скобка - вытаскиваем из стека в результат всё до первой (
+			//Закрывающая скобка ) - выполняем из стека операций всё до открывающей (
 			else if (infix[i] == ')')
 			{
 				while (st_char.Top() != '(')
 				{
+					if (st_d.IsEmpty()) throw "Exception: Too much operations";
 					double second = st_d.Pop();
+
+					if (st_d.IsEmpty()) throw "Exception: Too much operations";
 					double first = st_d.Pop();
 
 					char op = st_char.Pop();
 
-					//TODO Для всех операций
 					switch (op)
 					{
 					case '+':
@@ -284,10 +308,12 @@ public:
 				st_char.Pop();
 			}
 		}
+
+		if(st_d.IsEmpty()) throw "Exception: No operands in the string";
 		double result = st_d.Pop();
 
-		//TODO ПРОВЕРЯТЬ ПРИ ВЫЧИСЛЕНИЯХ НА ОШИБКИ
-		//ТАК ЖЕ, КАК И ПРИ ФОРМИРОВАНИИ СТРОКИ
+		//Если в стеке ещё остались числа, то в исх. строке было слишком много операндов
+		if (st_d.IsNotEmpty()) throw "Exception: Too many operands in the string";
 
 		return result;
 	}
