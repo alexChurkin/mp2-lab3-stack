@@ -21,7 +21,7 @@ int main()
 		getline(cin, str);
 		cout << "========================\n\n";
 		calc.SetExpr(str);
-		cout << "Expression: " << calc.GetExpr();
+		cout << "Expression: " << calc.GetExpr() << "\n\n";
 
 		bool bracesOk = calc.CheckExpr();
 		if (bracesOk) {
