@@ -161,7 +161,7 @@ namespace mp2lab3stackform {
 			if (!Char::IsControl(e->KeyChar) && !Char::IsDigit(e->KeyChar) 
 				&& e->KeyChar != '.' && e->KeyChar != '(' && e->KeyChar != ')'
 				&& e->KeyChar != '+' && e->KeyChar != '-' && e->KeyChar != '*' && e->KeyChar != '/'
-				&& e->KeyChar != ' ')
+				&& e->KeyChar != '^' && e->KeyChar != 'e' && e->KeyChar != ' ')
 			{
 				e->Handled = true;
 			}
@@ -191,7 +191,7 @@ namespace mp2lab3stackform {
 
 			if (!calc.CheckExpr())
 			{
-				labelResult->Text = "Incorrect";
+				labelResult->Text = "Incorrect expression";
 				return;
 			}
 
@@ -202,7 +202,7 @@ namespace mp2lab3stackform {
 			}
 			catch (...)
 			{
-				labelResult->Text = "Incorrect";
+				labelResult->Text = "Incorrect expression";
 			}
 		}
 
