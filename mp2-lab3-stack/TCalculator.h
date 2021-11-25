@@ -8,8 +8,8 @@
 using namespace std;
 
 class TCalculator {
-	//Строка, содержащая некоторое арифм. выражение
-	//Например, (2+2)*2
+	//Строка, содержащая некоторое арифметическое выражение
+	//Например, (2 + 2) * 2
 	string expr;
 	string postfix;
 	TStack<char> st_char;
@@ -31,21 +31,18 @@ class TCalculator {
 	}
 
 public:
-	//Конструктор
+
 	TCalculator() {
 	}
 
-	//Деструктор
 	~TCalculator() {
 	}
 
-	//Конструктор копирования
 	TCalculator(const TCalculator& other) {
 		expr = other.expr;
 		postfix = other.postfix;
 	}
 
-	//Оператор присваивания
 	TCalculator& operator=(const TCalculator& other) {
 		expr = other.expr;
 		postfix = other.postfix;

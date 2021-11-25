@@ -8,7 +8,7 @@ private:
 	//Просто массив
 	T* arr;
 	int size;
-	//Номер последнего элемента стэка
+	//Номер последнего элемента стека
 	int pos;
 
 public:
@@ -18,7 +18,7 @@ public:
 
 	TStack& operator=(const TStack& other);
 
-	//Сравнение двух стэков
+	//Сравнение двух стеков
 	bool operator==(const TStack& other) const;
 	bool operator!=(const TStack& other) const;
 
