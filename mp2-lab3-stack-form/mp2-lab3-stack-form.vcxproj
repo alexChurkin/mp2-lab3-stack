@@ -124,6 +124,7 @@
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\mp2-lab3-stack\mp2-lab3-stack.vcxproj">
@@ -135,6 +136,12 @@
       <DependentUpon>MainForm.h</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="mp2-lab3-stack-form.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="img\icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
