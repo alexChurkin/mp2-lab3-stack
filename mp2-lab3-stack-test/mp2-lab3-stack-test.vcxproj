@@ -43,10 +43,19 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="test_tcalculator.cpp" />
+    <ClCompile Include="test_tlstack.cpp" />
     <ClCompile Include="test_tstack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\mp2-lab3-stack\mp2-lab3-stack.vcxproj">
+      <Project>{473775f7-c13a-42ce-a1e2-dcf3507d281e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\stack-with-list\stack-with-list.vcxproj">
+      <Project>{1b9f7608-b321-4ba8-95c0-c0ff37f00418}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
