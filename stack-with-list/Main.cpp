@@ -76,6 +76,12 @@ int main()
     cout << "(s5 == s3) = " << (s5 == s3) << "\n\n";
     cout << "(s5 == s4) = " << (s5 == s4) << "\n\n";
 
+    cout << "s5.Pop() = " << s5.Pop() << "\n\n";
+    cout << "s5:\n" << s5 << " (IsEmpty = " << s5.IsEmpty() << ")\n\n";
+
+    cout << "(s5 == s3) = " << (s5 == s3) << "\n\n";
+    cout << "(s5 == s4) = " << (s5 == s4) << "\n\n";
+
 
     TLCalculator calc;
     string str;
