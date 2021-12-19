@@ -12,7 +12,7 @@ int main()
 
     TLStack<int> s;
 
-    cout << "Console tests for TLStack\n";
+    cout << "Console TLStack demo\n";
     cout << "=========================\n\n";
 
     cout << "Stack s:\n" << s << " (IsEmpty = " << s.IsEmpty() << ")\n\n";
