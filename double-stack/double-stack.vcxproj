@@ -139,7 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ConsoleMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TDoubleStack.h" />
